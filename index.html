@@ -153,14 +153,14 @@
             <div class="container">
                 <div class="insert_coupn row">
                     <div class="col">
-                        <p><strong>Insert Coupn</strong>(off5%,off5%,off5%)</p>
+                        <p><strong>Insert Coupn</strong>(1 to 80% Disocunt)</p>
                         <div class="input-group flex-nowrap " style="width: 80%;">
                             <span class="input-group-text" id="addon-wrapping">
                                 <i class="uil uil-percentage"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Cupon Code" aria-label="Username"
-                                aria-describedby="addon-wrapping">
-                            <button class="btn btn-outline-primary " type="button" id="button-addon2 apply-cupon">Apply
+                            <input type="text" class="form-control" id="discount_price_percent" placeholder="Cupon Code"
+                                aria-label="Username" aria-describedby="addon-wrapping" value="0">
+                            <button class="btn btn-outline-primary " type="button" id="apply-cupon">Apply
                                 Cupon</button>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                                 <div class="col ">
                                     <strong>Subtotal :</strong>
                                 </div>
-                                <div class="col">
+                                <div class="col " id="subtotal_amount">
                                     0
                                 </div>
                             </div>
@@ -179,7 +179,7 @@
                                 <div class="col">
                                     <strong>Disocunt :</strong>
                                 </div>
-                                <div class="col">
+                                <div class="col" id="product_discount_amount">
                                     0
                                 </div>
                             </div>
@@ -188,7 +188,7 @@
                                 <div class="col">
                                     <strong>Grandtotal :</strong>
                                 </div>
-                                <div class="col">
+                                <div class="col" id="product_grandTotal">
                                     0
                                 </div>
                             </div>
