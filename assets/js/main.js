@@ -76,27 +76,49 @@ class AddToCart {
 
     updateProduct(product_img, product_name, product_price, product_quantity) {
 
-        let tr = document.createElement('tr');
-        tr.className = "text-center item";
-        tr.innerHTML = `
-        <th scope="row">1</th>
-        <td><img src="${product_img}" class="display_table_image" alt="..."></td>
-        <td>${product_name}</td>
-        <td>${product_price}</td>
-        <td>
-            <form>
-                <div class="value-button" id="decrease" value="Decrease Value">-</div>
+        let temp = 0
+        let proName = document.querySelectorAll('#product_name')
+        // console.log(proName);
+        proName.forEach(t => {
+            if (t.textContent === product_name) {
+                let value = t.parentElement.childNodes[9].childNodes[1].childNodes[3].value
+                // console.log(value);
+                temp++
+                t.parentElement.childNodes[9].childNodes[1].childNodes[3].value = ++value;
+                let proPrice = parseInt(t.parentElement.childNodes[7].textContent)
 
-                <input type="number" id="number" value="${product_quantity}" />
-                <div class="value-button" id="increase" value="Increase Value">+</div>
+                let unitPrice = value * proPrice
+                console.log(unitPrice);
+                // t.parentElement.parentElement.parentElement.childNodes[11].textContent = unitPrice;
+                t.parentElement.childNodes[11].textContent = unitPrice;
+            }
+            // this.productSubTotalPriceUpdate()
+        })
 
-            </form>
-        </td>
-        <td id="quantity_price">${product_price}</td>
-        <td><a href="#"><i class="uil uil-times " id="remove_item_icon"></i></a></td>
-        `
+        if (temp === 0) {
+            let tr = document.createElement('tr');
+            tr.className = "text-center item";
+            tr.innerHTML = `
+                        <th scope="row">1</th>
+                        <td><img src="${product_img}" class="display_table_image" alt="..."></td>
+                        <td id="product_name">${product_name}</td>
+                        <td>${product_price}</td>
+                        <td>
+                            <form>
+                                <div class="value-button" id="decrease" value="Decrease Value">-</div>
 
-        productList.appendChild(tr)
+                                <input type="number" id="number" value="${product_quantity}" />
+                                <div class="value-button" id="increase" value="Increase Value">+</div>
+
+                            </form>
+                        </td>
+                        <td id="quantity_price">${product_price}</td>
+                        <td><a href="#"><i class="uil uil-times " id="remove_item_icon"></i></a></td>
+                        `
+            productList.appendChild(tr)
+        }
+
+
         this.productSubTotalPriceUpdate()
 
 
@@ -110,14 +132,16 @@ class AddToCart {
             let value;
             if (target.id == 'increase') {
                 value = target.previousElementSibling.value
+                value = isNaN(value) ? 0 : value;
                 value++
                 // console.log(value);
             }
 
             else if (target.id == 'decrease') {
                 value = target.nextElementSibling.value
-                value--
-                // console.log(value);
+                value = isNaN(value) ? 1 : value;
+                value < 2 ? value = 2 : '';
+                value--;
 
             }
             target.parentElement.childNodes[3].value = value;
@@ -155,11 +179,18 @@ class AddToCart {
         let product_discount_amount = document.getElementById('product_discount_amount')
         // console.log(dis);
         subtotal = parseInt(subtotal)
-
-
-        let discount = ((subtotal * dis) / 100)
-        // console.log(discount);
+        let discount = 0
+        if (dis > 100 || dis < 0) {
+            alert('Incorrect cupon')
+            document.getElementById('discount_price_percent').value = discount
+        }
+        else {
+            discount = ((subtotal * dis) / 100)
+        }
         product_discount_amount.textContent = discount
+        // let discount = ((subtotal * dis) / 100)
+        // // console.log(discount);
+        // product_discount_amount.textContent = discount
         // console.log(discount);
         this.productGrandToatalUpdate(subtotal, discount)
         return discount
@@ -184,9 +215,6 @@ class AddToCart {
             let p = target.parentElement.parentElement.parentElement
             p.remove();
             this.productSubTotalPriceUpdate()
-
-
-
         }
 
     }
