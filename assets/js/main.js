@@ -34,6 +34,7 @@
 /*==========Set Element==========*/
 let productList = document.getElementById('list_of_cart_product')
 let Cuppon = document.getElementById('apply-cupon').addEventListener('click', applyCupon)
+let message = document.getElementById('message')
 
 productList.addEventListener('click', incDecTarget)
 
@@ -47,7 +48,9 @@ function applyCupon() {
 function incDecTarget(e) {
     let product = new AddToCart();
     product.setIncDecValue(e.target);
+    product.removeItem(e.target);
     e.preventDefault();
+
 
 }
 
@@ -90,7 +93,7 @@ class AddToCart {
             </form>
         </td>
         <td id="quantity_price">${product_price}</td>
-        <td><a href="#"><i class="uil uil-times remove_item_icon"></i></a></td>
+        <td><a href="#"><i class="uil uil-times " id="remove_item_icon"></i></a></td>
         `
 
         productList.appendChild(tr)
@@ -173,6 +176,20 @@ class AddToCart {
 
     }
 
+    removeItem(target) {
+        // console.log(target.id);
+        let trId = target.id
+        // console.log(trId);
+        if (target.id == 'remove_item_icon') {
+            let p = target.parentElement.parentElement.parentElement
+            p.remove();
+            this.productSubTotalPriceUpdate()
+
+
+
+        }
+
+    }
 }
 
 
