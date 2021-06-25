@@ -106,7 +106,7 @@ class AddToCart {
                         <td>
                             <form>
                                 <div class="value-button" id="decrease" value="Decrease Value">-</div>
-
+                                
                                 <input type="number" id="number" value="${product_quantity}" />
                                 <div class="value-button" id="increase" value="Increase Value">+</div>
 
@@ -179,6 +179,7 @@ class AddToCart {
         let product_discount_amount = document.getElementById('product_discount_amount')
         // console.log(dis);
         subtotal = parseInt(subtotal)
+        dis = isNaN(dis) ? 0 : dis;
         let discount = 0
         if (dis > 100 || dis < 0) {
             alert('Incorrect cupon')
